@@ -36,3 +36,13 @@ Bu depo keşif/teşhis amaçlıdır. Herkese açık olabileceğinden ham özel v
 4. PHP cron adaptorü ve mobil gösterimi bağla.
 - GitHub Actions kontrol iş akışı UTC :07, :17, :27, :37, :47 ve :57 dakikalarına planlandı; 403 için 60 dakikalık soğuma uygulanır. 10 dakika kontrol **10 dakika boyunca tekrar 403 istemek demek değildir**. Zamanlama kesin değildir.
 - Split APK bütünlük denetimleri ve açılış kanıtları için `scripts/apk_bundle_validator.py`, `tests/test_apk_bundle_validator.py` ve `docs/EMULATOR_TEST.md` dosyalarını esas al.
+
+
+## Çalışan alternatif: ESPN (19 Ekim 2026)
+
+- [docs/ESPN_SUCCESS.md](docs/ESPN_SUCCESS.md) içindeki kanıtlar doğrulandı. Maçkolik 403'ü çözmeden ESPN verisi kullanılabiliyor.
+- Kaynak `rosters[].roster[].stats[]`, anahtar `name=totalShots`, değer `value` (sayısal) — `shotsOnTarget` ayrı.
+- `appearances>=1` olmayan oyuncunun maçını son beşe dahil etme. `totalShots` eksikse NULL, sıfır değil.
+- `php/espn_last5.php` 15 dakika önbellekli mobil paneli ve JSON çıktısını FTP'de sunuyor.
+- Son 5 maç hesapları **lig bazlıdır**; farklı turnuvalar için kupa eşleştirmesi ayrı gerekir.
+- ESPN site uç noktaları üçüncü taraf, resmî geliştirici sözleşmesi değildir; yoğun otomatik sorgular/erişim engeli aşma yapılmaz.
