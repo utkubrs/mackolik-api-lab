@@ -80,3 +80,15 @@
 - `data/public_site_latest.json` içinde bu HTTP 403 sonuç kaydedildi. Bu, sitenin insanlar tarafından hiç açılamadığı anlamına gelmez; otomasyon ortamının isteği reddedildiğini gösterir.
 - `scripts/public_site.py` son beş maç şut verisini **kasıtlı olarak doğrulanmadı** gösterir; sayfa başlığının bulunmasını veri başarısı saymaz.
 - Bu aşamada otomatik erişim denemelerini yoğunlaştırmak yerine resmi veri erişim yetkisi veya otomasyon için açık kaynak/izinli çözüm gerekir.
+
+
+## Bağımlılık enjeksiyonu (DEX yöntem imzaları)
+
+`classes4.dex` içinde şu dört sağlayıcının her biri tam olarak bir `retrofit2.Retrofit` parametresi alıyor:
+
+- `ThirdPartyModule.provideFootballMatchesApi(Retrofit) -> FootballMatchesApi`
+- `ThirdPartyModule.provideFootballPlayerApi(Retrofit) -> FootballPlayerApi`
+- `ThirdPartyModule.provideFootballSearchPlayerApi(Retrofit) -> FootballSearchPlayerApi`
+- `ThirdPartyModule.provideTokenApi(Retrofit) -> TokenApi`
+
+`classes20.dex` içinde otomatik üretilmiş `ThirdPartyModule_ProvideTokenApi...Factory` sınıfının `retrofitProvider` bağımlılığı da görülüyor. Bu, token servisinin bir Retrofit örneğine bağlı olduğunu **kesinleştirir**, fakat onun URL'sini/kimlik doğrulamasını **kesinleştirmez**. Dagger component sağlayıcı eşlemesi veya uygulamanın izinli ağ isteği kayıtları olmadan host tahmini yapmak hatalıdır.
