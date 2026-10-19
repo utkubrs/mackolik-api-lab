@@ -87,6 +87,7 @@ jobs:
       - name: Türkiye sunucusundan bağımsız PHP testi
         if: steps.guard.outputs.probe == 'true'
         run: |
+          set -euo pipefail
           python3 scripts/remote_check.py 2>&1 | tee remote.log
       - name: Sonuç dosyalarını sakla
         if: always() && steps.guard.outputs.probe == 'true'
@@ -143,7 +144,16 @@ jobs:
           git add data/latest.json data/history.jsonl reports/SON_DURUM.md
           if ! git diff --cached --quiet; then
             git commit -m "test: publish API status for run ${{ github.run_number }}"
-            git push origin HEAD:main
+            pushed=false
+            for attempt in 1 2 3 4; do
+              git pull --rebase -X theirs origin main
+              if git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+              sleep $((attempt * 2))
+            done
+            if [ "$pushed" != "true" ]; then echo "Could not publish after retries"; exit 1; fi
           else
             echo 'Yeni veri değişikliği bulunmadı.'
           fi
