@@ -63,3 +63,8 @@ GitHub Actions sunucusu **2 GET** isteği yaptı: `/api/matches/` ve `/soccer/ap
 Gerçek Android 15 emülatörü başarıyla başlatıldı; ABI listesinde Maçkolik split APK'nin `arm64-v8a` mimarisi yer alıyor. Orijinal APK'nin çalıştırılması için, büyük yükleme dosyasını herkese açık repoya koymadan erişilebilecek özel bir APK kaynağı gerekiyor. [Emülatör kanıtı ve normal APK testi](docs/EMULATOR_TEST.md).
 
 **İstek aralığı:** 10 dakikalık kontrol planı devam eder; erişim reddi sürüyorsa üçüncü taraf API'ye gereksiz denemeleri 60 dakikada bire düşüren koruma etkindir. Gerçek maç istatistiği JSON'u henüz alınmadı.
+
+
+## Google Play üzerinden APK yükleme testi (19 Ekim 2026)
+
+[Android 15 Google Play sistem imajı testi](docs/PLAY_STORE_TEST.md) başarıyla koştu; mağaza kurulu, fakat **Google hesabı oturum açma ekranı** görüldü. **Maçkolik uygulaması kurulu değil; API verisi gelmedi.** İlk gerçek uygulama testine orijinal imzalı ZIP kaynağı sağlandığında devam edilebilir.
