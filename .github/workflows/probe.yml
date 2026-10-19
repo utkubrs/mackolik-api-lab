@@ -38,16 +38,16 @@ on:
         type: boolean
         default: true
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '7,22,37,52 * * * *'
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: mackolik-api-probe
   cancel-in-progress: false
 jobs:
   probe:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     env:
       MODE: ${{ inputs.mode || 'smoke' }}
       SEARCH_TERM: ${{ inputs.search_term || 'Harry Winks' }}
@@ -86,3 +86,50 @@ jobs:
             probe.log
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Sonucu depoda yayımla (son durum + geçmiş)
+        if: always()
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          if [[ ! -s out/diagnostics.json ]]; then echo 'Tanılama dosyası bulunamadı; yayımlama atlandı.'; exit 0; fi
+          mkdir -p data reports
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          run=json.loads(Path("out/diagnostics.json").read_text(encoding="utf-8"))
+          entries=[{"mode":x.get("mode"),"status":x.get("http_status"),"outcome":x.get("outcome"),
+                    "duration_ms":x.get("duration_ms"),"received_bytes":x.get("received_bytes"),
+                    "json":x.get("is_json"),"error":x.get("error"),
+                    "schema_paths":x.get("schema_paths",[])[:60]} for x in run.get("results",[])]
+          short={"utc_time":run.get("utc_time"),"mode":run.get("mode"),
+                 "github_run":os.environ.get("GH_RUN_ID"),"results":entries}
+          Path("data/latest.json").write_text(json.dumps(short,indent=2,ensure_ascii=False)+"\\n",encoding="utf-8")
+          history=Path("data/history.jsonl")
+          old=history.read_text(encoding="utf-8").splitlines() if history.exists() else []
+          record={"utc_time":short["utc_time"],"github_run":short["github_run"],
+                  "results":[{"mode":x["mode"],"status":x["status"],"outcome":x["outcome"]} for x in entries]}
+          history.write_text("\\n".join((old+[json.dumps(record,ensure_ascii=False)])[-384:])+"\\n",encoding="utf-8")
+          u=f"https://github.com/{os.environ.get('GH_REPO')}/actions/runs/{short['github_run']}"
+          lines=["# Maçkolik API Lab — Son kontrol", "",
+                 "GitHub Actions her 15 dakikada bir testi *planlar*; GitHub yoğunluğunda gecikebilir.",
+                 f"**UTC:** {short['utc_time']}  |  **GitHub logları:** [Çalışmayı aç]({u})","",
+                 "| Kontrol | HTTP | JSON | Sonuç | Süre |",
+                 "|---|---:|---|---|---:|"]
+          for item in entries:
+            lines.append(f"| {item['mode']} | {item['status'] or '—'} | {'Evet' if item['json'] else 'Hayır'} | {item['outcome']} | {item['duration_ms']} ms |")
+          lines+=["","Gerçek JSON örnekleri için ilgili çalışmanın **Artifacts** bölümündeki dosyayı aç.",
+                  "Bu tablo gerçek API erişimi doğrulanana kadar 'veri geliyor' iddiası değildir."]
+          Path("reports/SON_DURUM.md").write_text("\\n".join(lines)+"\\n",encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json data/history.jsonl reports/SON_DURUM.md
+          if ! git diff --cached --quiet; then
+            git commit -m "test: publish API status for run ${{ github.run_number }}"
+            git push origin HEAD:main
+          else
+            echo 'Yeni veri değişikliği bulunmadı.'
+          fi
