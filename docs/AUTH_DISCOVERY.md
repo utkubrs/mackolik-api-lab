@@ -45,3 +45,29 @@
 - [Son kontrol](../reports/SON_DURUM.md)
 - [JSON durum](../data/latest.json)
 - [Özel klasöre FTP dağıtım logları](https://github.com/utkubrs/duvar-arena/actions)
+
+
+## Yeni statik doğrulama — Retrofit base URL'leri (19 Ekim 2026)
+
+`base.apk` içindeki **classes7.dex**, `Lcom/perform/livescores/di/ApiModule;` sınıfının gerçek yöntem gövdelerinde şu sabit adresleri Retrofit.Builder.baseUrl çağrısından önce kullanıyor:
+
+| DEX metodu | Doğrudan görülen sabit base URL |
+|---|---|
+| `provideAtmosphereRetrofit` | `https://api.mackolikfeeds.com` |
+| `provideContactUsRetrofit` | `https://api.mackolikfeeds.com` |
+| `provideFavOddRetrofit` | `https://api.mackolikfeeds.com` |
+| `provideOnboardRetrofit` | `https://api.mackolikfeeds.com` |
+| `provideAdRetrofit` | `https://ad.mackolikfeeds.com/` |
+| `provideLanguageRetrofit` | `https://www.mackolik.com/static-files/` |
+| `provideKokteylRetrofit` | `http://sportsapi.cdn.md` |
+| `providePerformFeedsConfig` | `https://api.mackolikfeeds.com` |
+
+`classes4.dex` içindeki `ThirdPartyModule.provideFootballMatchesApi`, `provideFootballSearchPlayerApi`, `provideFootballPlayerApi` ve `provideTokenApi` metodlarında `Retrofit.create` çağrısı doğrulandı. Bu yöntemlerin aldığı Retrofit örneklerine hangi `@Named` sağlayıcının bağlandığı burada henüz kesinleştirilmedi. **Özellikle ana futbol arayüzünün yukarıdaki hangi base URL'yi kullandığı ayrıca doğrulanmadan farklı hostlarda deneme bombardımanı yapılmamalı.**
+
+### API dışındaki alternatif: herkesin görebildiği futbolcu profili
+
+- Maçkolik web profilinde Harry Winks: `https://www.mackolik.com/futbolcu/h-winks/5qfa3h4gut5jlnfkexq5m1djp` (arama yoluyla gerçek sayfa doğrulandı).
+- Genel lig istatistik sayfalarında `Maç Başı Toplam Şut` başlığı bulunuyor.
+- **Bu web verileri oyuncunun son 5 maçının şut sayılarını göstermiyor.** Bu nedenle son beş maç dizisi üretmeyiz.
+- `.github/workflows/public_site.yml` erişilebilirliği günlük / manuel, bağımsız şekilde kontrol eder; sonuç `data/public_site_latest.json` olarak yayımlanır.
+
