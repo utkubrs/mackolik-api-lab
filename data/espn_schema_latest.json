@@ -1,0 +1,411 @@
+{
+  "event_id": "401879263",
+  "top_level_keys": [
+    "boxscore",
+    "format",
+    "gameInfo",
+    "lastFiveGames",
+    "leaders",
+    "broadcasts",
+    "pickcenter",
+    "odds",
+    "hasOdds",
+    "news",
+    "rosters",
+    "article",
+    "videos",
+    "header",
+    "seasonseries",
+    "keyEvents",
+    "commentary",
+    "wallclockAvailable",
+    "meta",
+    "standings"
+  ],
+  "blocks": {
+    "rosters": {
+      "list_length": 2,
+      "first": {
+        "homeAway": "home",
+        "winner": true,
+        "team": {
+          "id": "349",
+          "abbreviation": "BOU",
+          "displayName": "AFC Bournemouth",
+          "color": "f42727",
+          "alternateColor": "B57EDC",
+          "logos": {
+            "list_length": 2,
+            "first": "dict"
+          }
+        },
+        "roster": {
+          "list_length": 20,
+          "first": {
+            "active": "bool",
+            "starter": "bool",
+            "jersey": "str",
+            "athlete": "dict",
+            "position": "dict",
+            "subbedIn": "bool",
+            "subbedOut": "bool",
+            "formationPlace": "str",
+            "media": "dict",
+            "stats": "list"
+          }
+        },
+        "uniform": {
+          "type": "home",
+          "color": "ff0000",
+          "alternateColor": "000000"
+        },
+        "formation": "4-1-4-1"
+      }
+    },
+    "boxscore": {
+      "teams": {
+        "list_length": 2,
+        "first": {
+          "team": {
+            "id": "str",
+            "uid": "str",
+            "slug": "str",
+            "location": "str",
+            "name": "str",
+            "abbreviation": "str",
+            "displayName": "str",
+            "shortDisplayName": "str",
+            "color": "str",
+            "alternateColor": "str",
+            "logo": "str",
+            "uniform": "dict"
+          },
+          "statistics": {
+            "list_length": 28,
+            "first": "dict"
+          },
+          "displayOrder": 1,
+          "homeAway": "home"
+        }
+      }
+    },
+    "leaders": {
+      "list_length": 2,
+      "first": {
+        "team": {
+          "id": "349",
+          "uid": "s:600~t:349",
+          "displayName": "AFC Bournemouth",
+          "abbreviation": "BOU",
+          "links": {
+            "list_length": 2,
+            "first": "dict"
+          },
+          "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/349.png",
+          "logos": {
+            "list_length": 2,
+            "first": "dict"
+          }
+        },
+        "leaders": {
+          "list_length": 4,
+          "first": {
+            "name": "str",
+            "displayName": "str",
+            "leaders": "list",
+            "advantage": "bool"
+          }
+        }
+      }
+    },
+    "lastFiveGames": {
+      "list_length": 2,
+      "first": {
+        "displayOrder": 1,
+        "team": {
+          "id": "349",
+          "uid": "s:600~t:349",
+          "displayName": "AFC Bournemouth",
+          "abbreviation": "BOU",
+          "links": {
+            "list_length": 2,
+            "first": "dict"
+          },
+          "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/349.png",
+          "logos": {
+            "list_length": 2,
+            "first": "dict"
+          }
+        },
+        "events": {
+          "list_length": 5,
+          "first": {
+            "id": "str",
+            "links": "list",
+            "atVs": "str",
+            "gameDate": "str",
+            "score": "str",
+            "homeTeamId": "str",
+            "awayTeamId": "str",
+            "homeTeamScore": "str",
+            "awayTeamScore": "str",
+            "homeAggregateScore": "str",
+            "awayAggregateScore": "str",
+            "homeShootoutScore": "str",
+            "awayShootoutScore": "str",
+            "gameResult": "str",
+            "competitionName": "str",
+            "opponent": "dict",
+            "opponentLogo": "str",
+            "leagueName": "str",
+            "leagueAbbreviation": "str"
+          }
+        }
+      }
+    },
+    "keyEvents": {
+      "list_length": 38,
+      "first": {
+        "id": "53889022",
+        "type": {
+          "id": "80",
+          "text": "Kickoff",
+          "type": "kickoff"
+        },
+        "text": "First Half begins.",
+        "period": {
+          "number": 1
+        },
+        "clock": {
+          "value": 0.0,
+          "displayValue": ""
+        },
+        "scoringPlay": false,
+        "source": {
+          "id": "38",
+          "description": "SA.ENVOY"
+        },
+        "wallclock": "2026-10-18T13:00:09Z",
+        "shootout": false
+      }
+    },
+    "header": {
+      "id": "401879263",
+      "uid": "s:600~l:700~e:401879263",
+      "season": {
+        "year": 2026,
+        "current": true,
+        "type": 14308,
+        "name": "2026-27 English Premier League"
+      },
+      "timeValid": true,
+      "competitions": {
+        "list_length": 1,
+        "first": {
+          "id": "401879263",
+          "uid": "s:600~l:700~e:401879263~c:401879263",
+          "date": "2026-10-18T13:00Z",
+          "neutralSite": false,
+          "conferenceCompetition": false,
+          "boxscoreAvailable": true,
+          "commentaryAvailable": true,
+          "liveAvailable": false,
+          "onWatchESPN": false,
+          "recent": false,
+          "wallclockAvailable": true,
+          "boxscoreSource": "full",
+          "playByPlaySource": "full",
+          "competitors": {
+            "list_length": 2,
+            "first": "dict"
+          },
+          "notes": {
+            "list_length": 0,
+            "first": null
+          },
+          "status": {
+            "type": "dict"
+          },
+          "broadcasts": {
+            "list_length": 1,
+            "first": "dict"
+          },
+          "details": {
+            "list_length": 3,
+            "first": "dict"
+          },
+          "groups": {
+            "id": "str",
+            "name": "str",
+            "abbreviation": "str"
+          },
+          "isFinal": false
+        }
+      },
+      "links": {
+        "list_length": 3,
+        "first": {
+          "rel": {
+            "list_length": 3,
+            "first": "str"
+          },
+          "href": "https://www.espn.com/soccer/match/_/gameId/401879263/sunderland-a",
+          "text": "Summary",
+          "shortText": "Summary",
+          "isExternal": false,
+          "isPremium": false
+        }
+      },
+      "league": {
+        "id": "700",
+        "uid": "s:600~l:700",
+        "name": "English Premier League",
+        "abbreviation": "Premier League",
+        "shortName": "Premier League",
+        "midsizeName": "ENG.1",
+        "slug": "eng.1",
+        "isTournament": false,
+        "links": {
+          "list_length": 11,
+          "first": {
+            "rel": "list",
+            "href": "str",
+            "text": "str"
+          }
+        },
+        "logos": {
+          "list_length": 2,
+          "first": {
+            "href": "str",
+            "rel": "list"
+          }
+        }
+      },
+      "linksv4": {
+        "list_length": 5,
+        "first": {
+          "rel": {
+            "list_length": 3,
+            "first": "str"
+          },
+          "href": "https://www.espn.com/soccer/match/_/gameId/401879263/sunderland-a",
+          "text": "Gamecast",
+          "shortText": "Summary",
+          "isExternal": false,
+          "isPremium": false
+        }
+      }
+    },
+    "commentary": {
+      "list_length": 118,
+      "first": {
+        "sequence": 0,
+        "time": {
+          "value": 0.0,
+          "displayValue": ""
+        },
+        "text": "Lineups are announced and players are warming up."
+      }
+    }
+  },
+  "shot_and_starting_paths": [
+    {
+      "path": "$.leaders[0].leaders[0].displayName",
+      "value": "Total Shots"
+    },
+    {
+      "path": "$.leaders[0].leaders[0].leaders[0].statistics[0].displayName",
+      "value": "Shots"
+    },
+    {
+      "path": "$.leaders[1].leaders[0].displayName",
+      "value": "Total Shots"
+    },
+    {
+      "path": "$.leaders[1].leaders[0].leaders[0].statistics[0].displayName",
+      "value": "Shots"
+    },
+    {
+      "path": "$.leaders[1].leaders[3].leaders[0].athlete.headshot",
+      "value": {
+        "href": "https://a.espncdn.com/i/headshots/soccer/players/full/301449.png",
+        "alt": "Robin Roefs"
+      }
+    },
+    {
+      "path": "$.rosters[0].roster[0].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[0].roster[0].athlete.headshot",
+      "value": {
+        "href": "https://a.espncdn.com/i/headshots/soccer/players/full/289824.png",
+        "alt": "Djordje Petrovic"
+      }
+    },
+    {
+      "path": "$.rosters[0].roster[1].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[0].roster[2].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[0].roster[3].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[0].roster[3].athlete.headshot",
+      "value": {
+        "href": "https://a.espncdn.com/i/headshots/soccer/players/full/222776.png",
+        "alt": "Tyler Adams"
+      }
+    },
+    {
+      "path": "$.rosters[0].roster[4].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[0].roster[5].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[0].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[0].athlete.headshot",
+      "value": {
+        "href": "https://a.espncdn.com/i/headshots/soccer/players/full/301449.png",
+        "alt": "Robin Roefs"
+      }
+    },
+    {
+      "path": "$.rosters[1].roster[1].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[2].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[3].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[4].starter",
+      "value": true
+    },
+    {
+      "path": "$.rosters[1].roster[5].starter",
+      "value": true
+    },
+    {
+      "path": "$.header.competitions[0].shotMapAvailable",
+      "value": true
+    }
+  ],
+  "http_status": 200,
+  "checked_utc": "2026-10-19T17:31:50.166015+00:00"
+}
