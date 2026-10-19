@@ -38,7 +38,7 @@ on:
         type: boolean
         default: true
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '7,17,27,37,47,57 * * * *'
 permissions:
   contents: write
 concurrency:
@@ -63,7 +63,16 @@ jobs:
         run: |
           python3 --version
           python3 -m unittest discover -s tests -v
+      - name: API erişimi için güvenli yeniden deneme kararı
+        id: guard
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python3 scripts/retry_guard.py --cooldown-minutes 60 --force
+          else
+            python3 scripts/retry_guard.py --cooldown-minutes 60
+          fi
       - name: Canlı API bağlantı ve JSON denemesi
+        if: steps.guard.outputs.probe == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -76,11 +85,11 @@ jobs:
           if [[ "$VERBOSE" == 'true' ]]; then args+=(--verbose); fi
           python3 scripts/probe.py "${args[@]}" 2>&1 | tee probe.log
       - name: Türkiye sunucusundan bağımsız PHP testi
-        if: always()
+        if: steps.guard.outputs.probe == 'true'
         run: |
           python3 scripts/remote_check.py 2>&1 | tee remote.log
       - name: Sonuç dosyalarını sakla
-        if: always()
+        if: always() && steps.guard.outputs.probe == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: mackolik-diagnostics-${{ github.run_number }}
@@ -93,7 +102,7 @@ jobs:
           retention-days: 30
 
       - name: Sonucu depoda yayımla (son durum + geçmiş)
-        if: always()
+        if: always() && steps.guard.outputs.probe == 'true'
         env:
           GH_REPO: ${{ github.repository }}
           GH_RUN_ID: ${{ github.run_id }}
