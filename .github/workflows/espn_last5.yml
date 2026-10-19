@@ -1,0 +1,61 @@
+name: "ESPN — Oyuncu son 5 maç şut testi"
+on:
+  workflow_dispatch:
+    inputs:
+      league:
+        description: "Lig kodu (örn: eng.1)"
+        default: eng.1
+      team_id:
+        description: "ESPN takım ID"
+        default: '349'
+      player_id:
+        description: "ESPN oyuncu ID"
+        default: '357719'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/espn_last5.py'
+      - 'tests/test_espn_last5.py'
+      - '.github/workflows/espn_last5.yml'
+permissions:
+  contents: write
+concurrency:
+  group: espn-last5-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  last5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      ESPN_LEAGUE: ${{ inputs.league || 'eng.1' }}
+      ESPN_TEAM_ID: ${{ inputs.team_id || '349' }}
+      ESPN_PLAYER_ID: ${{ inputs.player_id || '357719' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: İstatistik mantığı testleri
+        run: |
+          python3 -m py_compile scripts/espn_last5.py
+          python3 -m unittest discover -s tests -p test_espn_last5.py -v
+      - name: ESPN canlı son beş maç isteği
+        run: python3 scripts/espn_last5.py
+      - name: Sonuçları sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: espn-last5-${{ github.run_number }}
+          path: out/espn_last5.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Gerçek son şut dizisini kaydet
+        if: success()
+        run: |
+          mkdir -p data
+          cp out/espn_last5.json data/espn_last5_latest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/espn_last5_latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "test: ESPN player last-five appearances evidence"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
