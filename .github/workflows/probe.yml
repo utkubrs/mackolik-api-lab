@@ -106,12 +106,12 @@ jobs:
                     "schema_paths":x.get("schema_paths",[])[:60]} for x in run.get("results",[])]
           short={"utc_time":run.get("utc_time"),"mode":run.get("mode"),
                  "github_run":os.environ.get("GH_RUN_ID"),"results":entries}
-          Path("data/latest.json").write_text(json.dumps(short,indent=2,ensure_ascii=False)+"\\n",encoding="utf-8")
+          Path("data/latest.json").write_text(json.dumps(short,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
           history=Path("data/history.jsonl")
           old=history.read_text(encoding="utf-8").splitlines() if history.exists() else []
           record={"utc_time":short["utc_time"],"github_run":short["github_run"],
                   "results":[{"mode":x["mode"],"status":x["status"],"outcome":x["outcome"]} for x in entries]}
-          history.write_text("\\n".join((old+[json.dumps(record,ensure_ascii=False)])[-384:])+"\\n",encoding="utf-8")
+          history.write_text("\n".join((old+[json.dumps(record,ensure_ascii=False)])[-384:])+"\n",encoding="utf-8")
           u=f"https://github.com/{os.environ.get('GH_REPO')}/actions/runs/{short['github_run']}"
           lines=["# Maçkolik API Lab — Son kontrol", "",
                  "GitHub Actions her 15 dakikada bir testi *planlar*; GitHub yoğunluğunda gecikebilir.",
@@ -122,7 +122,7 @@ jobs:
             lines.append(f"| {item['mode']} | {item['status'] or '—'} | {'Evet' if item['json'] else 'Hayır'} | {item['outcome']} | {item['duration_ms']} ms |")
           lines+=["","Gerçek JSON örnekleri için ilgili çalışmanın **Artifacts** bölümündeki dosyayı aç.",
                   "Bu tablo gerçek API erişimi doğrulanana kadar 'veri geliyor' iddiası değildir."]
-          Path("reports/SON_DURUM.md").write_text("\\n".join(lines)+"\\n",encoding="utf-8")
+          Path("reports/SON_DURUM.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
