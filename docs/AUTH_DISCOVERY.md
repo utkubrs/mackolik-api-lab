@@ -71,3 +71,12 @@
 - **Bu web verileri oyuncunun son 5 maçının şut sayılarını göstermiyor.** Bu nedenle son beş maç dizisi üretmeyiz.
 - `.github/workflows/public_site.yml` erişilebilirliği günlük / manuel, bağımsız şekilde kontrol eder; sonuç `data/public_site_latest.json` olarak yayımlanır.
 
+
+
+## Canlı kamuya açık sayfa testi (19 Ekim 2026, 16:32 UTC)
+
+- `https://www.mackolik.com/futbolcu/h-winks/5qfa3h4gut5jlnfkexq5m1djp` web araması ile gerçek profil olarak doğrulandı.
+- GitHub Actions'in standart, yönlendirmesiz olmayan urllib HTTPS sayfa isteği **HTTP 403**, sıfır yanıt gövdesi döndürdü.
+- `data/public_site_latest.json` içinde bu HTTP 403 sonuç kaydedildi. Bu, sitenin insanlar tarafından hiç açılamadığı anlamına gelmez; otomasyon ortamının isteği reddedildiğini gösterir.
+- `scripts/public_site.py` son beş maç şut verisini **kasıtlı olarak doğrulanmadı** gösterir; sayfa başlığının bulunmasını veri başarısı saymaz.
+- Bu aşamada otomatik erişim denemelerini yoğunlaştırmak yerine resmi veri erişim yetkisi veya otomasyon için açık kaynak/izinli çözüm gerekir.
