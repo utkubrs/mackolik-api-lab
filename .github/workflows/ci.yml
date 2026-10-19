@@ -1,0 +1,19 @@
+name: Python testleri (canlı API çağrısı yok)
+on:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python testleri
+        run: |
+          python3 -m py_compile scripts/probe.py
+          python3 -m unittest discover -s tests -v
