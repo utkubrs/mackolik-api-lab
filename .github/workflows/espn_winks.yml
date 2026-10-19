@@ -1,0 +1,36 @@
+name: "Harry Winks — gerçek son 5 Serie A şut"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/espn_find_winks.py'
+      - '.github/workflows/espn_winks.yml'
+permissions:
+  contents: write
+jobs:
+  player:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: ESPN güncel Cagliari kadro ve Harry Winks son 5 maç testi
+        run: python3 scripts/espn_find_winks.py
+      - name: Kaynak kanıtı
+        uses: actions/upload-artifact@v4
+        with:
+          name: winks-shot-sequence-${{ github.run_number }}
+          path: out/harry_winks.json
+          retention-days: 14
+      - name: Sonuç kaydı
+        run: |
+          mkdir -p data
+          cp out/harry_winks.json data/harry_winks_latest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/harry_winks_latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "test: verified Harry Winks identity and shots"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
