@@ -1,0 +1,80 @@
+{
+  "utc_time": "2026-10-19T17:34:55.484498+00:00",
+  "league": "eng.1",
+  "team_id": "349",
+  "player_id": "357719",
+  "number_of_finished_events_found": 7,
+  "searched_events": 5,
+  "last_five_appearances": [
+    {
+      "event_id": "401879263",
+      "date": "2026-10-18T13:00:00+00:00",
+      "name": "Rayan",
+      "played": true,
+      "player_id": "357719",
+      "team": "AFC Bournemouth",
+      "starter": true,
+      "total_shots": 7,
+      "shots_on_target": 3,
+      "shots_verified": true
+    },
+    {
+      "event_id": "401878775",
+      "date": "2026-10-10T14:00:00+00:00",
+      "name": "Rayan",
+      "played": true,
+      "player_id": "357719",
+      "team": "AFC Bournemouth",
+      "starter": true,
+      "total_shots": 2,
+      "shots_on_target": 1,
+      "shots_verified": true
+    },
+    {
+      "event_id": "401879276",
+      "date": "2026-09-20T13:00:00+00:00",
+      "name": "Rayan",
+      "played": true,
+      "player_id": "357719",
+      "team": "AFC Bournemouth",
+      "starter": true,
+      "total_shots": 0,
+      "shots_on_target": 0,
+      "shots_verified": true
+    },
+    {
+      "event_id": "401879285",
+      "date": "2026-09-12T14:00:00+00:00",
+      "name": "Rayan",
+      "played": true,
+      "player_id": "357719",
+      "team": "AFC Bournemouth",
+      "starter": true,
+      "total_shots": 5,
+      "shots_on_target": 1,
+      "shots_verified": true
+    },
+    {
+      "event_id": "401879286",
+      "date": "2026-09-05T11:30:00+00:00",
+      "name": "Rayan",
+      "played": true,
+      "player_id": "357719",
+      "team": "AFC Bournemouth",
+      "starter": true,
+      "total_shots": 1,
+      "shots_on_target": 0,
+      "shots_verified": true
+    }
+  ],
+  "total_shots_sequence": [
+    7,
+    2,
+    0,
+    5,
+    1
+  ],
+  "five_appearances_found": true,
+  "all_five_shots_verified": true,
+  "note": "Reverse chronological; league-specific. totalShots != shotsOnTarget. Null means missing, not zero."
+}
