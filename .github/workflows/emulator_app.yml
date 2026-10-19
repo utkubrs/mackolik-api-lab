@@ -33,7 +33,7 @@ jobs:
           emulator-boot-timeout: 480
           emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
           script: bash scripts/emulator_app_smoke.sh
-      - name: Ekran görüntüsü ve kurulum durumunu sakla
+      - name: APK, süreç, çökme ve ekran kanıtlarını sakla
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -42,5 +42,11 @@ jobs:
             out/launch.png
             out/activity.txt
             out/installed_package_paths.txt
+            out/apk_bundle_check.json
+            out/app_launch_evidence.json
+            out/app_pid.txt
+            out/package_status.txt
+            out/launch_command.txt
+            out/crash_markers.txt
           if-no-files-found: warn
           retention-days: 7
