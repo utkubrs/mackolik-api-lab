@@ -1,0 +1,85 @@
+{
+  "roster_url": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/teams/2925/roster",
+  "http_status": 200,
+  "candidate_player_ids": [
+    {
+      "id": "202332",
+      "name": "Harry Winks"
+    }
+  ],
+  "five_shots": {
+    "player_id": "202332",
+    "sequence": [
+      1,
+      1,
+      0,
+      1,
+      0
+    ],
+    "complete": true,
+    "verified": true,
+    "matches": [
+      {
+        "event_id": "401874764",
+        "date": "2026-10-11T18:45:00+00:00",
+        "name": "Harry Winks",
+        "played": true,
+        "player_id": "202332",
+        "team": "Cagliari",
+        "starter": true,
+        "total_shots": 1,
+        "shots_on_target": 1,
+        "shots_verified": true
+      },
+      {
+        "event_id": "401874964",
+        "date": "2026-09-19T13:00:00+00:00",
+        "name": "Harry Winks",
+        "played": true,
+        "player_id": "202332",
+        "team": "Cagliari",
+        "starter": true,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_verified": true
+      },
+      {
+        "event_id": "401874979",
+        "date": "2026-09-12T18:45:00+00:00",
+        "name": "Harry Winks",
+        "played": true,
+        "player_id": "202332",
+        "team": "Cagliari",
+        "starter": true,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_verified": true
+      },
+      {
+        "event_id": "401874943",
+        "date": "2026-09-07T16:30:00+00:00",
+        "name": "Harry Winks",
+        "played": true,
+        "player_id": "202332",
+        "team": "Cagliari",
+        "starter": true,
+        "total_shots": 1,
+        "shots_on_target": 0,
+        "shots_verified": true
+      },
+      {
+        "event_id": "401874938",
+        "date": "2026-08-30T18:45:00+00:00",
+        "name": "Harry Winks",
+        "played": true,
+        "player_id": "202332",
+        "team": "Cagliari",
+        "starter": true,
+        "total_shots": 0,
+        "shots_on_target": 0,
+        "shots_verified": true
+      }
+    ]
+  },
+  "child_exit_code": 0
+}
