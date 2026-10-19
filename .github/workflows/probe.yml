@@ -129,7 +129,7 @@ jobs:
           history.write_text("\n".join((old+[json.dumps(record,ensure_ascii=False)])[-384:])+"\n",encoding="utf-8")
           u=f"https://github.com/{os.environ.get('GH_REPO')}/actions/runs/{short['github_run']}"
           lines=["# Maçkolik API Lab — Son kontrol", "",
-                 "GitHub Actions her 15 dakikada bir testi *planlar*; GitHub yoğunluğunda gecikebilir.",
+                 "GitHub Actions her 10 dakikada bir kontrolü *planlar*; 403 tekrarı varsa 60 dakikalık istek bekleme süresi uygulanır; GitHub yoğunluğunda gecikebilir.",
                  f"**UTC:** {short['utc_time']}  |  **GitHub logları:** [Çalışmayı aç]({u})","",
                  "| Kontrol | HTTP | JSON | Sonuç | Süre |",
                  "|---|---:|---|---|---:|"]
