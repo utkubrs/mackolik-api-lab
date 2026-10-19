@@ -36,7 +36,7 @@
 - Yetkisiz API erişim kontrolünü kırma, kullanıcı/cihaz kimliği taklidi veya WAF atlatma denemesi yapma.
 - Yetkili erişim gerekiyorsa sağlayıcıdan resmi erişim ya da kullanıcının kendi izinli oturum akışını kullan.
 - 403 aynı kalıyorsa sınırsız istek/yeniden deneme döngüsü yerine düşük hacimli tanılama ve rapor.
-- GitHub testleri UTC :07 :22 :37 :52'de planlanır; GitHub iş kuyruğu gecikmeleri olabilir.
+- GitHub testleri UTC :07 :17 :27 :37 :47 :57'de planlanır; GitHub iş kuyruğu gecikmeleri olabilir.
 - Dağıtım klasörü `https://duvar.applerehberi.com/mackolik-api-lab/` sadece izolasyonlu test dosyalarını barındırır.
 
 ## Canlı loglar ve sonuçlar
@@ -92,3 +92,7 @@
 - `ThirdPartyModule.provideTokenApi(Retrofit) -> TokenApi`
 
 `classes20.dex` içinde otomatik üretilmiş `ThirdPartyModule_ProvideTokenApi...Factory` sınıfının `retrofitProvider` bağımlılığı da görülüyor. Bu, token servisinin bir Retrofit örneğine bağlı olduğunu **kesinleştirir**, fakat onun URL'sini/kimlik doğrulamasını **kesinleştirmez**. Dagger component sağlayıcı eşlemesi veya uygulamanın izinli ağ isteği kayıtları olmadan host tahmini yapmak hatalıdır.
+
+## Android emülatörü
+
+GitHub Actions üzerinden Android 15 emülatörü açılışı ve `arm64-v8a` desteği kanıtlandı; henüz APK kurulumu veya futbol verisi JSON başarısı değil. Kanıtlar: [EMULATOR_TEST.md](EMULATOR_TEST.md).
