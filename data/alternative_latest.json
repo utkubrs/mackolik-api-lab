@@ -1,5 +1,5 @@
 {
-  "utc_time": "2026-10-19T17:30:15.512442+00:00",
+  "utc_time": "2026-10-19T17:42:03.099876+00:00",
   "source": "public-data feasibility experiment",
   "results": [
     {
@@ -7,7 +7,7 @@
       "http_status": 200,
       "is_json": true,
       "bytes": 46560,
-      "duration_ms": 191,
+      "duration_ms": 58,
       "keys": [
         "leagues",
         "events",
@@ -22,7 +22,7 @@
       "http_status": 200,
       "is_json": true,
       "bytes": 410312,
-      "duration_ms": 121,
+      "duration_ms": 71,
       "keys": [
         "boxscore",
         "format",
@@ -57,7 +57,7 @@
       "http_status": 200,
       "is_json": false,
       "bytes": 44567,
-      "duration_ms": 1151,
+      "duration_ms": 1179,
       "keys": [],
       "error": null,
       "url": "https://understat.com/getLeagueData/EPL/2026"
