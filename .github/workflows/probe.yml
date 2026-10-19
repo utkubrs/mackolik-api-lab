@@ -4,7 +4,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/probe.yml'
-      - 'scripts/probe.py'
+      - 'scripts/**'
       - 'tests/**'
   workflow_dispatch:
     inputs:
@@ -75,6 +75,10 @@ jobs:
           if [[ -n "$MATCH_DATE" ]]; then args+=(--date "$MATCH_DATE"); fi
           if [[ "$VERBOSE" == 'true' ]]; then args+=(--verbose); fi
           python3 scripts/probe.py "${args[@]}" 2>&1 | tee probe.log
+      - name: Türkiye sunucusundan bağımsız PHP testi
+        if: always()
+        run: |
+          python3 scripts/remote_check.py 2>&1 | tee remote.log
       - name: Sonuç dosyalarını sakla
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,6 +88,7 @@ jobs:
             out/diagnostics.json
             out/summary.md
             probe.log
+            remote.log
           if-no-files-found: warn
           retention-days: 30
 
