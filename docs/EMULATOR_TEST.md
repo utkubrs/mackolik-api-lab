@@ -33,3 +33,13 @@ Sohbete yüklenmiş 106 MB ZIP, GitHub Actions runner tarafından otomatik eriş
 Önceki bütün kamuya açık API kontrolleri `403/Access Denied` olduğu sürece `scripts/retry_guard.py` yeni istekleri 60 dakika aralıkla sınırlar. GitHub schedule gecikebilir.
 
 Bu ayrıntılar, "10 dakikada bir 403'ü zorlamadan izle; yeni erişim koşulu kanıtı varsa meşru uygulama testini bir kez çalıştır" yaklaşımını uygulanabilir kılar.
+
+## Bu oturumda yüklenen APK paketinin bütünlük özeti
+
+`Mackolik-8.5.4-split-apks.zip` SHA-256:
+
+```
+9d49ecb65c07bbf840d348c06e17e482a3865350b388432d6452713b4e400d9d
+```
+
+Bu özet yüklenen orijinal arşivden hesaplandı; ZIP dosyasının kendisi kamuya açık GitHub deposuna konmadı. Hazırlanan emülatör eylemi, bir HTTPS kaynak tanımlandığında aynı SHA ile arşivin değişmemiş olduğunu doğrulayabilir.
