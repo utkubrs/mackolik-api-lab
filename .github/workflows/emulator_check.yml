@@ -1,0 +1,51 @@
+name: "Android Emülatör — APK Uyumluluğu"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/emulator_compat.py'
+      - 'tests/test_emulator_compat.py'
+      - '.github/workflows/emulator_check.yml'
+permissions:
+  contents: read
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+      - name: ABI analiz kodunu doğrula
+        run: python3 -m unittest discover -s tests -p "test_emulator_compat.py" -v
+      - name: KVM yetkileri
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Android 15 emülatörünü başlat ve mimariyi denetle
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          ram-size: 2048M
+          heap-size: 512M
+          emulator-boot-timeout: 480
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: |
+            adb wait-for-device
+            adb shell getprop ro.build.version.release
+            adb shell getprop ro.product.cpu.abi
+            adb shell getprop ro.product.cpu.abilist > emu_abis.txt
+            python3 scripts/emulator_compat.py --abi-list "$(cat emu_abis.txt)"
+            cat out/emulator_compat.json >> "$GITHUB_STEP_SUMMARY"
+      - name: ABI raporunu sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-abi-result
+          path: |
+            out/emulator_compat.json
+            emu_abis.txt
+          if-no-files-found: warn
+          retention-days: 14
