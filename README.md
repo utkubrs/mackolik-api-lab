@@ -1,3 +1,5 @@
+> **Canlı test alanı:** [FTP üzerinden çalışan mobil panel](https://duvar.applerehberi.com/mackolik-api-lab/) · [Sunucudan gerçek zamanlı JSON HTTP durumları](https://duvar.applerehberi.com/mackolik-api-lab/remote_probe.php) · [Erişim analizi](docs/AUTH_DISCOVERY.md). Türkiye hostingine FTP aktarımı ve PHP çalışması GitHub loglarında doğrulandı. Mevcut cevap **HTTP 403 Access Denied**; bu, futbol istatistiği verisi değildir.
+
 # ⚽ Maçkolik API Lab
 
 **GitHub Actions üstünde çalışan, telefondan takip edilebilen veri kaynağı teşhis laboratuvarı.** Maçkolik Android 8.5.4 statik analiziyle bulunan maç, oyuncu, kadro ve şut istatistiği endpointlerinin ağ ve JSON erişimini küçük hacimli, **yetkisiz kimlik doğrulama taklidi yapmayan** denemelerle kontrol eder.
