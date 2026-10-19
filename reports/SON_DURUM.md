@@ -1,6 +1,6 @@
 # Maçkolik API Lab — Son kontrol
 
-GitHub Actions her 15 dakikada bir testi *planlar*; GitHub yoğunluğunda gecikebilir.
+GitHub Actions her 10 dakikada bir kontrolü *planlar*; 403 sürerse gerçek API denemesini 60 dakikada bire düşürür; GitHub yoğunluğunda gecikebilir.
 **UTC:** 2026-10-19T16:32:09.454212+00:00  |  **GitHub logları:** [Çalışmayı aç](https://github.com/utkubrs/mackolik-api-lab/actions/runs/39286179537)
 
 | Kontrol | HTTP | JSON | Sonuç | Süre |
