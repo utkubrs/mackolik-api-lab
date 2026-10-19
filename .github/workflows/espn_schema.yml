@@ -1,0 +1,38 @@
+name: "ESPN futbolcu şut/kadro JSON haritası"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/espn_schema.py'
+      - '.github/workflows/espn_schema.yml'
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python sözdizimi
+        run: python3 -m py_compile scripts/espn_schema.py
+      - name: Doğrulanmış maçın ESPN şemasını çıkar
+        run: python3 scripts/espn_schema.py
+      - name: JSON şema kanıtı
+        uses: actions/upload-artifact@v4
+        with:
+          name: espn-schema-${{ github.run_number }}
+          path: out/espn_schema.json
+          retention-days: 14
+      - name: GitHub'a son şemayı yaz
+        run: |
+          mkdir -p data
+          cp out/espn_schema.json data/espn_schema_latest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/espn_schema_latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "test: record ESPN player-stats schema evidence"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
