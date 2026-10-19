@@ -1,0 +1,88 @@
+name: "Maçkolik API Bağlantı Testi"
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe.yml'
+      - 'scripts/probe.py'
+      - 'tests/**'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Test türü'
+        type: choice
+        options: [smoke, matches, search, player, player_matches, match, player_stats, team, active_squad]
+        default: smoke
+        required: true
+      search_term:
+        description: 'Futbolcu adı'
+        default: 'Harry Winks'
+        type: string
+      player_id:
+        description: 'Oyuncu ID'
+        type: string
+      match_id:
+        description: 'Maç ID'
+        type: string
+      team_id:
+        description: 'Takım ID'
+        type: string
+      season_id:
+        description: 'Sezon ID'
+        type: string
+      date:
+        description: 'YYYY-MM-DD'
+        type: string
+      verbose:
+        description: 'Detaylı log'
+        type: boolean
+        default: true
+  schedule:
+    - cron: '17 */6 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: mackolik-api-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MODE: ${{ inputs.mode || 'smoke' }}
+      SEARCH_TERM: ${{ inputs.search_term || 'Harry Winks' }}
+      PLAYER_ID: ${{ inputs.player_id || '' }}
+      MATCH_ID: ${{ inputs.match_id || '' }}
+      TEAM_ID: ${{ inputs.team_id || '' }}
+      SEASON_ID: ${{ inputs.season_id || '' }}
+      MATCH_DATE: ${{ inputs.date || '' }}
+      VERBOSE: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python ve unit testleri
+        run: |
+          python3 --version
+          python3 -m unittest discover -s tests -v
+      - name: Canlı API bağlantı ve JSON denemesi
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=(--mode "$MODE" --search-term "$SEARCH_TERM" --out out --timeout 15)
+          if [[ -n "$PLAYER_ID" ]]; then args+=(--player-id "$PLAYER_ID"); fi
+          if [[ -n "$MATCH_ID" ]]; then args+=(--match-id "$MATCH_ID"); fi
+          if [[ -n "$TEAM_ID" ]]; then args+=(--team-id "$TEAM_ID"); fi
+          if [[ -n "$SEASON_ID" ]]; then args+=(--season-id "$SEASON_ID"); fi
+          if [[ -n "$MATCH_DATE" ]]; then args+=(--date "$MATCH_DATE"); fi
+          if [[ "$VERBOSE" == 'true' ]]; then args+=(--verbose); fi
+          python3 scripts/probe.py "${args[@]}" 2>&1 | tee probe.log
+      - name: Sonuç dosyalarını sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mackolik-diagnostics-${{ github.run_number }}
+          path: |
+            out/diagnostics.json
+            out/summary.md
+            probe.log
+          if-no-files-found: warn
+          retention-days: 30
