@@ -46,7 +46,7 @@ adb shell dumpsys activity activities | grep -E 'mResumedActivity|mTopResumedAct
 adb shell pidof com.kokteyl.mackolik | tr -d '\r' > out/app_pid.txt || :
 adb shell dumpsys package com.kokteyl.mackolik | grep -E 'versionCode=|versionName=|firstInstallTime=' | head -8 > out/package_status.txt || :
 # Android logcat can include tokens or user data. Keep ONLY crash markers, not whole logs.
-adb logcat -d -v brief 2>/dev/null | grep -E 'FATAL EXCEPTION|Process: com\\.kokteyl\\.mackolik|AndroidRuntime.*(FATAL|Exception)' | head -25 > out/crash_markers.txt || :
+adb logcat -d -v brief 2>/dev/null | grep -E 'FATAL EXCEPTION|Process: com\.kokteyl\.mackolik|AndroidRuntime.*(FATAL|Exception)' | head -25 > out/crash_markers.txt || :
 python3 - <<'PY'
 import json
 from pathlib import Path
