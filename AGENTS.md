@@ -16,7 +16,7 @@ Bu depo keşif/teşhis amaçlıdır. Herkese açık olabileceğinden ham özel v
 - HTTP 403/401/429 => takip edilen engel; kimlik doğrulama ve kota mekanizmasını taklit etme/aşma.
 - Servis şartları ve veri lisansına uy; API erişimi uygun değilse izinli/ücretsiz alternatifler sun.
 - API kimliği, cookie, auth header, device fingerprint, kişi telefonu/e-postası ve tüm üçüncü taraf gövdesini GitHub loglarına koyma. Artefaktlarda hassas alanlar redakte edilmeli.
-- Ağ isteklerini yüksek sıklıkla veya sunucuyu zorlayacak şekilde çalıştırma; varsayılan 6 saatte 2 istek limiti artırılmamalı.
+- Ağ isteklerini yüksek sıklıkla veya sunucuyu zorlayacak şekilde çalıştırma; 10 dakikalık kontrol ve 403 sonrası 60 dakikalık soğuma kuralına uy; manual testi suistimal etme.
 - Özel APK ve telif hakkına tabi uygulama dosyaları repoya yüklenmeyecek. Üçüncü taraf kod/decompiled kaynak depolanmayacak.
 - Betiklerin yalnızca sabit `https://api.mackolikfeeds.com` sunucusu ve allowlist GET yollarını kullanmasını koru; kullanıcıdan keyfi URL alma.
 
@@ -34,3 +34,5 @@ Bu depo keşif/teşhis amaçlıdır. Herkese açık olabileceğinden ham özel v
 2. Sahici oyuncu ID ve maç ID eşleştirmelerini belirle.
 3. Son 5 şut ve 11 verileri için yeni unit test/iş akışı yaz; sadece doğrulanmış alan isimlerine dayan.
 4. PHP cron adaptorü ve mobil gösterimi bağla.
+- GitHub Actions kontrol iş akışı UTC :07, :17, :27, :37, :47 ve :57 dakikalarına planlandı; 403 için 60 dakikalık soğuma uygulanır. 10 dakika kontrol **10 dakika boyunca tekrar 403 istemek demek değildir**. Zamanlama kesin değildir.
+- Split APK bütünlük denetimleri ve açılış kanıtları için `scripts/apk_bundle_validator.py`, `tests/test_apk_bundle_validator.py` ve `docs/EMULATOR_TEST.md` dosyalarını esas al.
