@@ -15,7 +15,7 @@ function redact(mixed $v, int $depth=0): mixed {
         }
         return $o;
     }
-    return is_string($v) ? mb_substr($v,0,700) : $v;
+    return is_string($v) ? substr($v,0,700) : $v;
 }
 function probe(string $name, string $path, array $q): array {
     $url='https://api.mackolikfeeds.com'.$path.'?'.http_build_query($q,'','&',PHP_QUERY_RFC3986);
