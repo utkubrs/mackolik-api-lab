@@ -1,0 +1,27 @@
+{
+  "utc_time": "2026-10-19T15:51:47.659514+00:00",
+  "mode": "smoke",
+  "github_run": "39281114300",
+  "results": [
+    {
+      "mode": "matches",
+      "status": 403,
+      "outcome": "http_or_schema_error",
+      "duration_ms": 402,
+      "received_bytes": 398,
+      "json": false,
+      "error": null,
+      "schema_paths": []
+    },
+    {
+      "mode": "search",
+      "status": 403,
+      "outcome": "http_or_schema_error",
+      "duration_ms": 26,
+      "received_bytes": 410,
+      "json": false,
+      "error": null,
+      "schema_paths": []
+    }
+  ]
+}\n
