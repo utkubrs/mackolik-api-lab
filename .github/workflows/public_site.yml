@@ -1,0 +1,60 @@
+name: "Maçkolik — herkese açık oyuncu sayfası"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/public_site.py'
+      - 'tests/test_public_site.py'
+      - '.github/workflows/public_site.yml'
+  schedule:
+    - cron: '43 3 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: public-mackolik-site-test
+  cancel-in-progress: false
+jobs:
+  public-page:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kodu ve testleri doğrula
+        run: |
+          python3 -m py_compile scripts/public_site.py
+          python3 -m unittest discover -s tests -p 'test_public_site.py' -v
+      - name: Herkese açık Harry Winks profilini kontrol et
+        run: python3 scripts/public_site.py
+      - name: Log ve JSON kanıtını sakla
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-site-evidence-${{ github.run_number }}
+          path: out/public_site.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Son gözlemi depoda yayımla
+        if: always()
+        run: |
+          if [ ! -s out/public_site.json ]; then exit 0; fi
+          mkdir -p data
+          cp out/public_site.json data/public_site_latest.json
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          a=json.loads(Path('data/public_site_latest.json').read_text())
+          summary=Path(os.environ['GITHUB_STEP_SUMMARY'])
+          summary.write_text("# Web profil doğrulaması\n\n"
+             +f"HTTP: **{a['http_status']}**, HTML: **{a['evidence']['html']}**, "
+             +f"Harry Winks: **{a['evidence']['harry_winks_confirmed']}**.\n\n"
+             +"**Son 5 maç toplam şut verisi:** doğrulanmadı.\n")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/public_site_latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "test: publish public-site evidence"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
