@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maçkolik API Lab - Canlı durum</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,Arial,sans-serif;background:#101829;color:#eef4ff}
+body{margin:0;padding:18px}main{max-width:860px;margin:auto}
+h1{font-size:clamp(24px,5vw,34px)}h2{font-size:18px}
+p,.small{color:#bbcadf}a{color:#9fc6ff}
+.card{padding:16px;margin:15px 0;border:1px solid #344864;background:#1a2940;border-radius:16px;overflow-wrap:anywhere}
+table{width:100%;border-collapse:collapse}th,td{padding:10px 7px;border-bottom:1px solid #33435b;text-align:left}
+.bad{color:#ffacac;font-weight:bold}.ok{color:#79e1b1;font-weight:bold}
+button{font:inherit;border:0;border-radius:9px;background:#3668ba;color:white;padding:12px 17px;cursor:pointer}
+pre{white-space:pre-wrap;word-break:break-word;font-size:12px;padding:10px;border-radius:8px;background:#0c1424}
+</style>
+</head>
+<body><main>
+<h1>⚽ Maçkolik API Lab</h1>
+<p>Her 15 dakikada planlanan GitHub Actions kontrollerinin en son yayımladığı durum. Yanıtlar gerçek test sonuçlarıdır; eksik futbol verisi uydurulmaz.</p>
+<div class="card"><button id="refresh">Durumu yenile</button>
+<p id="status" role="status">GitHub raporu okunuyor...</p>
+<p class="small" id="time"></p>
+<div id="details"></div></div>
+<div class="card"><h2>Raporlar</h2>
+<p><a href="https://github.com/utkubrs/mackolik-api-lab/blob/main/reports/SON_DURUM.md">Son kontrol raporu</a></p>
+<p><a href="https://github.com/utkubrs/mackolik-api-lab/actions">Ayrıntılı GitHub Actions logları</a></p>
+<p><a href="https://github.com/utkubrs/mackolik-api-lab/blob/main/data/history.jsonl">Geçmiş durum kaydı</a></p>
+</div><p class="small">Bu sayfa test yapmaz; sonuçları GitHub deposundan okur. GitHub schedule gecikebilir. HTTP 403, API verilerinin başarıyla alındığı anlamına gelmez.</p></main>
+<script>
+const statusEl=document.getElementById('status');
+const timeEl=document.getElementById('time');
+const details=document.getElementById('details');
+function td(row,text){const c=document.createElement('td');c.textContent=String(text??'—');row.append(c);return c;}
+async function refresh(){
+ statusEl.textContent='Son rapor getiriliyor...'; details.replaceChildren();
+ try{
+  const u='https://raw.githubusercontent.com/utkubrs/mackolik-api-lab/main/data/latest.json?t='+Date.now();
+  const response=await fetch(u,{cache:'no-store'});
+  if(!response.ok)throw new Error('GitHub raporu HTTP '+response.status);
+  const payload=await response.json();
+  if(!Array.isArray(payload.results))throw new Error('Rapor formatı hatalı');
+  const date=new Date(payload.utc_time);
+  timeEl.textContent='Son kontrol: '+(Number.isNaN(date.getTime())?'Bilinmiyor':date.toLocaleString('tr-TR'));
+  const t=document.createElement('table');
+  const h=t.createTHead().insertRow();
+  for(const x of ['Test','HTTP','JSON','Süre']){const c=document.createElement('th');c.textContent=x;h.append(c);}
+  for(const x of payload.results){
+   const row=t.insertRow();td(row,x.mode);const c=td(row,x.status||'Ağ hatası');
+   c.className=x.status===200&&x.json?'ok':'bad';
+   td(row,x.json?'Evet':'Hayır');td(row,x.duration_ms+' ms');
+  }
+  details.append(t);
+  statusEl.textContent=payload.results.some(x=>x.status===200&&x.json)?'JSON veri alındı; içerik ayrıca doğrulanmalı.':'Henüz doğrulanmış JSON verisi gelmedi.';
+ }catch(err){statusEl.textContent='Rapor yüklenemedi: '+err.message;}
+}
+document.getElementById('refresh').addEventListener('click',refresh);
+refresh();setInterval(refresh,60000);
+</script>
+</body></html>
