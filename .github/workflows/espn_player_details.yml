@@ -1,0 +1,36 @@
+name: "ESPN gerçek oyuncu istatistikleri"
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/espn_player_details.py'
+      - '.github/workflows/espn_player_details.yml'
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: ESPN gerçek kadro istatistik denemesi
+        run: python3 scripts/espn_player_details.py
+      - name: Raporu sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: espn-real-player-data-${{ github.run_number }}
+          path: out/espn_player_details.json
+          retention-days: 14
+      - name: Sonucu yayımla
+        run: |
+          mkdir -p data
+          cp out/espn_player_details.json data/espn_player_details.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/espn_player_details.json
+          if ! git diff --cached --quiet; then
+            git commit -m "test: capture verified ESPN player stat fields"
+            git pull --rebase -X theirs origin main
+            git push origin HEAD:main
+          fi
