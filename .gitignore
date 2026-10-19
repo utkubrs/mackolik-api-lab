@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+out/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
