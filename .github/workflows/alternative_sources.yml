@@ -26,12 +26,28 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_alternative_sources.py' -v
       - name: ESPN ve Understat gerçek JSON kontrolü
         run: python3 scripts/alternative_sources.py
+      - name: FTP sunucusunda Harry Winks gerçek PHP testi
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsS --max-time 100 'https://duvar.applerehberi.com/mackolik-api-lab/espn_last5.php?league=ita.1&team_id=2925&player_id=202332&format=json' -o out/hosted_winks.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('out/hosted_winks.json').read_text())
+          print('PHP server verified:',d.get('five_verified'))
+          print('Harry Winks last five:',d.get('series'))
+          if d.get('player_id')!='202332' or not d.get('five_verified'):
+              raise SystemExit('PHP source has no verified last-five result')
+          PY
       - name: Test raporunu indirilebilir sakla
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: alternative-football-data-${{ github.run_number }}
-          path: out/alternative_sources.json
+          path: |
+            out/alternative_sources.json
+            out/hosted_winks.json
           if-no-files-found: warn
           retention-days: 14
       - name: Son doğrulanmış sonucu GitHub'da yayımla
