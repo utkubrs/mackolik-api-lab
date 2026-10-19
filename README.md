@@ -68,3 +68,12 @@ Gerçek Android 15 emülatörü başarıyla başlatıldı; ABI listesinde Maçko
 ## Google Play üzerinden APK yükleme testi (19 Ekim 2026)
 
 [Android 15 Google Play sistem imajı testi](docs/PLAY_STORE_TEST.md) başarıyla koştu; mağaza kurulu, fakat **Google hesabı oturum açma ekranı** görüldü. **Maçkolik uygulaması kurulu değil; API verisi gelmedi.** İlk gerçek uygulama testine orijinal imzalı ZIP kaynağı sağlandığında devam edilebilir.
+
+
+## Emülatörsüz çalışan çözüm — ESPN (19.10.2026)
+
+**İlk başarılı canlı çözüm:** ESPN site futbol verilerinden maç listesi (HTTP 200), resmî maç sonrası kadrolar, oyuncunun **toplam şutu** ve son 5 oynadığı lig maçı hesaplanıyor. Rayan 7-2-0-5-1, Harry Winks (Cagliari) 1-1-0-1-0; iki örneğin her maçı ayrı ayrı doğrulandı.
+
+[Telefon uyumlu, sunucuda çalışan PHP paneli](https://duvar.applerehberi.com/mackolik-api-lab/espn_last5.php) · [Harry Winks ekranı](https://duvar.applerehberi.com/mackolik-api-lab/espn_last5.php?league=ita.1&team_id=2925&player_id=202332) · [Ayrıntılı uygulama/kanıt raporu](docs/ESPN_SUCCESS.md).
+
+Bu, özel Maçkolik API 403 engeline bağlı kalmadan veri almayı sağladı. ESPN site uç noktaları resmî geliştirici SLA'sı/lisansı garantisi olmayan kaynaklardır; canlı kullanım öncesi veri koşulları ve kapsama göre değerlendirme gerekir. Misli bahis oranlarının API kaynağı ayrıca araştırılmalıdır.
