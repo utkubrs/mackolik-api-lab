@@ -174,7 +174,7 @@ def request_one(mode: str, path: str, query: dict[str, str], timeout: float) -> 
     except (urllib.error.URLError, TimeoutError, OSError) as exc:
         error = f"{type(exc).__name__}: {str(exc)[:240]}"
     elapsed = round((time.perf_counter() - started) * 1000)
-    safe_headers = {k: headers[k] for k in ("content-type", "cache-control", "retry-after", "x-request-id", "cf-ray", "content-length") if k in headers}
+    safe_headers = {k: headers[k] for k in ("content-type", "cache-control", "retry-after", "x-request-id", "cf-ray", "content-length", "server", "via") if k in headers}
     logger.info("PROBE_RESULT mode=%s status=%s duration_ms=%s received_bytes=%s content_type=%s error=%s", mode, status, elapsed, len(raw), headers.get("content-type", ""), error)
     logger.info("RESPONSE_HEADERS_SAFE %s", json.dumps(safe_headers, ensure_ascii=False))
     try:
@@ -191,6 +191,13 @@ def request_one(mode: str, path: str, query: dict[str, str], timeout: float) -> 
         logger.warning("NON_JSON_BODY prefix_sha256=%s (body intentionally not logged)", hashlib.sha256(raw[:1024]).hexdigest())
     if shot:
         logger.info("TOTAL_SHOTS_CANDIDATE %s", json.dumps(shot, ensure_ascii=False))
+    non_json_excerpt = None
+    if raw and not parsed and any(t in headers.get("content-type", "").lower() for t in ("text/html", "text/plain")):
+        import html
+        non_json_excerpt = html.unescape(re.sub(r"<[^>]*>", " ", raw[:1200].decode("utf-8", errors="replace")))
+        non_json_excerpt = re.sub(r"\\s+", " ", non_json_excerpt).strip()[:500]
+        non_json_excerpt = re.sub(r"(?i)(token|password|api[_-]?key|secret)(\\s*[=:]\\s*)([^\\s]+)", r"\\1\\2[REDACTED]", non_json_excerpt)
+        logger.warning("HTTP_ERROR_TEXT_EXCERPT %s", non_json_excerpt)
     if len(raw) >= 524289:
         logger.warning("BODY_TRUNCATED at 512 KiB")
     return {"mode": mode, "url": url, "method": "GET", "http_status": status,
@@ -198,7 +205,8 @@ def request_one(mode: str, path: str, query: dict[str, str], timeout: float) -> 
             "duration_ms": elapsed, "received_bytes": len(raw), "body_truncated": len(raw) >= 524289,
             "safe_headers": safe_headers, "error": error, "is_json": parsed, "schema_paths": paths,
             "total_shots_candidate": shot, "response_sample_redacted": sample,
-            "non_json_sha256": hashlib.sha256(raw).hexdigest() if raw and not parsed else None}
+            "non_json_sha256": hashlib.sha256(raw).hexdigest() if raw and not parsed else None,
+            "non_json_excerpt": non_json_excerpt}
 
 
 def markdown_report(run: dict[str, Any]) -> str:
