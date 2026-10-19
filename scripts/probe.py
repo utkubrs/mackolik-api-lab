@@ -216,7 +216,7 @@ def markdown_report(run: dict[str, Any]) -> str:
         lines.append(f"| {item['mode']} | {item['http_status'] or '—'} | {item['outcome']} | {item['duration_ms']} ms | {'Evet' if item['is_json'] else 'Hayır'} |")
     lines.extend(["", "## Ayrıntılar"])
     for item in run["results"]:
-        lines.extend(["", "### " + item["mode"], "- HTTP: " + str(item["http_status"]), "- URL yolu: " + urllib.parse.urlsplit(item["url"]).path,
+        lines.extend(["", "### " + item["mode"], "- HTTP: " + str(item["http_status"]), "- URL yolu: " + urllib.parse.urlsplit(item.get("url") or "").path or "(remote)",
                       "- Yanıt boyutu: " + str(item["received_bytes"]) + " bayt", "- Süre: " + str(item["duration_ms"]) + " ms",
                       "- Hata: " + str(item["error"] or "yok"), "- JSON alanı: " + str(len(item["schema_paths"]))])
         if item["schema_paths"]:
