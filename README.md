@@ -14,7 +14,7 @@ GitHub deposunda **Actions → ⚽ Maçkolik API - Ağ ve JSON Testi → Run wor
 
 **Loglama:** `--verbose` ile DEBUG, UTC zaman damgası, URL ve GET parametreleri (id ve arama terimi), HTTP durum kodu, milisaniye, gelen bayt, güvenli HTTP başlıkları, JSON alan yolları ve toplam şut adayı. Tam sunucu HTTP başlıkları, cookies, tokens ve yetkilendirme bilgileri **asla basılmaz**; JSON örneklerinde hassas anahtarlar ayıklanır. Yanıt gövdesinin tamamı loglara basılmaz, saklanan örnekler limitlidir.
 
-**Otomatik test:** 15 dakikada bir (UTC :07, :22, :37, :52) 2 istek; yalnızca erişim teşhisi, yüksek frekanslı scraping yok. Planlanan çalıştırmalar GitHub'ın tarifesine ve erişim koşullarına bağlıdır. Log ve JSON artefaktları 30 gün saklanır.
+**Otomatik test:** 10 dakikada bir (UTC :07, :17, :27, :37, :47, :57) 2 istek; yalnızca erişim teşhisi, yüksek frekanslı scraping yok. Planlanan çalıştırmalar GitHub'ın tarifesine ve erişim koşullarına bağlıdır. Log ve JSON artefaktları 30 gün saklanır.
 
 ## PHP ile kullanmak
 
@@ -57,3 +57,9 @@ Hedef `1-0-2-5-1` gibi **toplam şut** dizisi. Şu an `player_stats` yanıtında
 GitHub Actions sunucusu **2 GET** isteği yaptı: `/api/matches/` ve `/soccer/api/search/`. Her ikisi de **HTTP 403**, `Content-Type: text/html`, HTML hata açıklaması `Access Denied`. İsteklere JSON dönmedi. Bu, APK'den bulunan yolların serbest erişilebilir olduğu anlamına gelmez. Erişim gereklilikleri yetkisiz aşılmayacak. Testler 15 dakikalık schedule'a ayarlı, GitHub çalıştırma gecikmeleri olabilir.
 
 **FTP dağıtımı:** Doğru hosting için kullanılabilir FTP kimlik bilgileri bulunmadığından yapılmadı. Test amaçlı `php/public_probe.php` hazır; depo sonucunun otomatik yayımlanması FTP gerektirmiyor.
+
+## Android emülatörü (yeni)
+
+Gerçek Android 15 emülatörü başarıyla başlatıldı; ABI listesinde Maçkolik split APK'nin `arm64-v8a` mimarisi yer alıyor. Orijinal APK'nin çalıştırılması için, büyük yükleme dosyasını herkese açık repoya koymadan erişilebilecek özel bir APK kaynağı gerekiyor. [Emülatör kanıtı ve normal APK testi](docs/EMULATOR_TEST.md).
+
+**İstek aralığı:** 10 dakikalık kontrol planı devam eder; erişim reddi sürüyorsa üçüncü taraf API'ye gereksiz denemeleri 60 dakikada bire düşüren koruma etkindir. Gerçek maç istatistiği JSON'u henüz alınmadı.
