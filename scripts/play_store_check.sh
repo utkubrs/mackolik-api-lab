@@ -32,6 +32,6 @@ result={
   "screenshot_present": (out/"play_store.png").exists() and (out/"play_store.png").stat().st_size > 0,
   "note":"Only tests opening official Play Store listing. A listing is NOT an installed app or API success."
 }
-(out/"play_store_evidence.json").write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\\n")
+(out/"play_store_evidence.json").write_text(json.dumps(result,indent=2,ensure_ascii=False)+chr(10))
 print(json.dumps(result,indent=2,ensure_ascii=False))
 PY
