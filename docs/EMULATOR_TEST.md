@@ -43,3 +43,11 @@ Bu ayrıntılar, "10 dakikada bir 403'ü zorlamadan izle; yeni erişim koşulu k
 ```
 
 Bu özet yüklenen orijinal arşivden hesaplandı; ZIP dosyasının kendisi kamuya açık GitHub deposuna konmadı. Hazırlanan emülatör eylemi, bir HTTPS kaynak tanımlandığında aynı SHA ile arşivin değişmemiş olduğunu doğrulayabilir.
+
+## APK bütünlük doğrulaması — 19 Ekim 2026
+
+Orijinal ZIP, bu oturumun çalışma alanında okunarak **dört APK'nin SHA-256 değeri ve dosya uzunluğu** ayrı ayrı `manifest.json` ile karşılaştırıldı: **4/4 eşleşme**.
+
+Projeye eklenen `scripts/apk_bundle_validator.py` emülatöre kurulumdan önce aynı kontrolleri uygulayacak; eksik/fazla ZIP girişlerini, çift girişleri, dosya kaçışlarını, değişmiş APK parçalarını ve yanlış paket/sürüm bilgisini reddedecek. `scripts/emulator_app_smoke.sh` ayrıca `out/app_launch_evidence.json` içinde uygulamanın gerçekten kurulup kurulmadığını, 20 saniye sonra çalışıp çalışmadığını, çökme belirtilerini ve ekran görüntüsünü ayrı ayrı raporlayacak.
+
+[19/19 başarılı test](https://github.com/utkubrs/mackolik-api-lab/actions/runs/39291125005). **Bunlar gerçek Maçkolik uygulamasının açıldığına veya özel API'nin çalıştığına dair kanıt değildir.** Gerçek emülatör kurulumu için erişilebilir orijinal ZIP kaynağı hâlâ eksik. Bağlı Drive'da Maçkolik ZIP kopyası bulunamadı; dosya yalnızca sohbet ekinde mevcut.
