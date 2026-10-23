@@ -11,10 +11,13 @@ on:
       player_id:
         description: "ESPN oyuncu ID"
         default: '357719'
+  schedule:
+    - cron: '10 7 * * *' # one low-volume daily check, UTC
   push:
     branches: [main]
     paths:
       - 'scripts/espn_last5.py'
+      - 'scripts/publish_espn_last5.py'
       - 'tests/test_espn_last5.py'
       - '.github/workflows/espn_last5.yml'
 permissions:
@@ -34,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: İstatistik mantığı testleri
         run: |
-          python3 -m py_compile scripts/espn_last5.py
+          python3 -m py_compile scripts/espn_last5.py scripts/publish_espn_last5.py
           python3 -m unittest discover -s tests -p test_espn_last5.py -v
       - name: ESPN canlı son beş maç isteği
         run: python3 scripts/espn_last5.py
@@ -47,10 +50,10 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
       - name: Gerçek son şut dizisini kaydet
-        if: success()
+        if: success() && env.ESPN_LEAGUE == 'eng.1' && env.ESPN_TEAM_ID == '349' && env.ESPN_PLAYER_ID == '357719'
         run: |
           mkdir -p data
-          cp out/espn_last5.json data/espn_last5_latest.json
+          python3 scripts/publish_espn_last5.py out/espn_last5.json data/espn_last5_latest.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/espn_last5_latest.json
