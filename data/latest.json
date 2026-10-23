@@ -1,14 +1,14 @@
 {
-  "utc_time": "2026-10-23T10:15:15.116672+00:00",
+  "utc_time": "2026-10-23T15:05:23.617922+00:00",
   "mode": "smoke",
-  "github_run": "39937767278",
+  "github_run": "39975228964",
   "results": [
     {
       "mode": "matches",
       "status": 403,
       "outcome": "http_or_schema_error",
-      "duration_ms": 494,
-      "received_bytes": 400,
+      "duration_ms": 543,
+      "received_bytes": 398,
       "json": false,
       "error": null,
       "schema_paths": []
@@ -17,8 +17,8 @@
       "mode": "search",
       "status": 403,
       "outcome": "http_or_schema_error",
-      "duration_ms": 10,
-      "received_bytes": 410,
+      "duration_ms": 19,
+      "received_bytes": 408,
       "json": false,
       "error": null,
       "schema_paths": []
@@ -27,7 +27,7 @@
       "mode": "remote_matches",
       "status": 403,
       "outcome": "http_or_schema_error",
-      "duration_ms": 197,
+      "duration_ms": 732,
       "received_bytes": 400,
       "json": false,
       "error": "Access Denied Access Denied You don't have permission to access \"http&#58;&#47;&#47;api&#46;mackolikfeeds&#46;com&#47;api&#47;matches&#47;&#63;\" on this server.",
@@ -37,8 +37,8 @@
       "mode": "remote_search",
       "status": 403,
       "outcome": "http_or_schema_error",
-      "duration_ms": 113,
-      "received_bytes": 410,
+      "duration_ms": 126,
+      "received_bytes": 408,
       "json": false,
       "error": "Access Denied Access Denied You don't have permission to access \"http&#58;&#47;&#47;api&#46;mackolikfeeds&#46;com&#47;soccer&#47;api&#47;search&#47;&#63;\" on th",
       "schema_paths": []
