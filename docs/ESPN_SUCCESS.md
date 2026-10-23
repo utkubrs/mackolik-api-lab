@@ -1,6 +1,6 @@
 # Maçkolik bağımsız çözüm: ESPN maç bazında oyuncu toplam şutları
 
-## Doğrulanmış durum — 19 Ekim 2026
+## Doğrulanmış durum — 23 Ekim 2026
 
 Maçkolik özel API yolları GitHub Actions ve Türkiye PHP sunucusunda HTTP 403 döndürdü. Emülatör şart değil: **ESPN'nin site futbol JSON'u**, aynı GitHub runner üzerinde HTTP 200 ve gerçek oyuncu verileri sağladı.
 
@@ -27,8 +27,8 @@ Eksik istatistiği kesinlikle 0'a dönüştürme. Son 5 **oynanan lig maçını*
 
 | Oyuncu | Lig | Takım | ESPN ID | Son 5 toplam şut |
 |---|---|---|---|---|
-| Rayan | eng.1 | Bournemouth (349) | 357719 | **7-2-0-5-1** |
-| Harry Winks | ita.1 | Cagliari (2925) | 202332 | **1-1-0-1-0** |
+| Rayan | eng.1 | Bournemouth (349) | 357719 | **7-2-0-5-1** (son oynanan lig maçı 18 Ekim 2026; son rapor 19 Ekim) |
+| Harry Winks | ita.1 | Cagliari (2925) | 202332 | **0-1-1-0-1** (son oynanan lig maçı 19 Ekim 2026; PHP HTTP 200, 23 Ekim doğrulaması) |
 
 - [Rayan canlı veri raporu](../data/espn_last5_latest.json)
 - [Harry Winks canlı veri raporu](../data/harry_winks_latest.json)
@@ -42,7 +42,7 @@ Eksik istatistiği kesinlikle 0'a dönüştürme. Son 5 **oynanan lig maçını*
 - `scripts/espn_last5.py`: gerçek son beş maç hesaplayıcısı
 - `scripts/espn_find_winks.py`: Cagliari kadrosundan doğrulanan gerçek ESPN oyuncu ID'si
 - `php/espn_last5.php`: tek başına çalışan PHP 8+ mobil panel + `?format=json`, 15 dakika önbellek
-- `.github/workflows/espn_last5.yml`: mobil GitHub Actions'dan tekrar çalıştırılabilir test
+- `.github/workflows/espn_last5.yml`: elle ve günde bir düşük hacimli GitHub Actions testi; yalnızca Rayan için beş tam doğrulanmış maçın raporu güncellenir; eksik/null veya eski rapor üzerine yazılmaz
 - `utkubrs/duvar-arena/.github/workflows/mackolik-ftp-probe.yml`: ayrı FTP test klasörüne PHP dağıtımı; canlı Rayan 5/5 doğrulandı.
 
 ### Gelecek entegrasyon
