@@ -1,28 +1,63 @@
 {
-  "utc_time": "2026-10-23T11:57:13.008436+00:00",
+  "utc_time": "2026-10-24T11:27:02.502652+00:00",
   "source": "public-data feasibility experiment",
   "results": [
     {
       "source": "espn_scoreboard",
       "http_status": 200,
       "is_json": true,
-      "bytes": 2503,
-      "duration_ms": 30,
+      "bytes": 12071,
+      "duration_ms": 86,
       "keys": [
         "leagues",
         "events",
         "provider"
       ],
       "error": null,
-      "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261022",
-      "event_count": 0
+      "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261023",
+      "event_count": 1
+    },
+    {
+      "source": "espn_summary",
+      "http_status": 200,
+      "is_json": true,
+      "bytes": 391765,
+      "duration_ms": 75,
+      "keys": [
+        "boxscore",
+        "format",
+        "gameInfo",
+        "lastFiveGames",
+        "leaders",
+        "broadcasts",
+        "pickcenter",
+        "odds",
+        "hasOdds",
+        "rosters",
+        "news",
+        "article",
+        "videos",
+        "header",
+        "seasonseries",
+        "keyEvents",
+        "commentary",
+        "wallclockAvailable",
+        "meta",
+        "standings"
+      ],
+      "error": null,
+      "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/summary?event=401879253",
+      "has_boxscore": true,
+      "boxscore_keys": [
+        "teams"
+      ]
     },
     {
       "source": "understat_league",
       "http_status": 200,
       "is_json": false,
-      "bytes": 44941,
-      "duration_ms": 1185,
+      "bytes": 45132,
+      "duration_ms": 852,
       "keys": [],
       "error": null,
       "url": "https://understat.com/getLeagueData/EPL/2026"
