@@ -1,14 +1,14 @@
 # Maçkolik API Lab — Son kontrol
 
 GitHub Actions her 10 dakikada bir kontrolü *planlar*; 403 tekrarı varsa 60 dakikalık istek bekleme süresi uygulanır; GitHub yoğunluğunda gecikebilir.
-**UTC:** 2026-10-23T22:01:26.818557+00:00  |  **GitHub logları:** [Çalışmayı aç](https://github.com/utkubrs/mackolik-api-lab/actions/runs/40030849334)
+**UTC:** 2026-10-24T00:26:08.195317+00:00  |  **GitHub logları:** [Çalışmayı aç](https://github.com/utkubrs/mackolik-api-lab/actions/runs/40044947973)
 
 | Kontrol | HTTP | JSON | Sonuç | Süre |
 |---|---:|---|---|---:|
-| matches | 403 | Hayır | http_or_schema_error | 841 ms |
-| search | 403 | Hayır | http_or_schema_error | 38 ms |
-| remote_matches | 403 | Hayır | http_or_schema_error | 205 ms |
-| remote_search | 403 | Hayır | http_or_schema_error | 106 ms |
+| matches | 403 | Hayır | http_or_schema_error | 792 ms |
+| search | 403 | Hayır | http_or_schema_error | 102 ms |
+| remote_matches | 403 | Hayır | http_or_schema_error | 266 ms |
+| remote_search | 403 | Hayır | http_or_schema_error | 119 ms |
 
 Gerçek JSON örnekleri için ilgili çalışmanın **Artifacts** bölümündeki dosyayı aç.
 Bu tablo gerçek API erişimi doğrulanana kadar 'veri geliyor' iddiası değildir.
